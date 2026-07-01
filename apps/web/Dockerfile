@@ -1,0 +1,18 @@
+FROM node:20-alpine
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+COPY packages/shared/package.json ./packages/shared/
+COPY apps/web/package.json ./apps/web/
+
+RUN npm install
+
+COPY packages/shared ./packages/shared
+COPY apps/web ./apps/web
+
+RUN npm run build -w packages/shared
+RUN npm run build -w apps/web
+
+EXPOSE 3000
+ENV NODE_ENV=production
+CMD ["npm", "run", "start", "-w", "apps/web"]
