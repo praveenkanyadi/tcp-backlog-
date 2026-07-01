@@ -16,4 +16,4 @@ RUN npm run build -w apps/api
 
 EXPOSE 3001
 ENV NODE_ENV=production
-CMD ["node", "apps/api/dist/index.js"]
+CMD ["sh", "-c", "npx prisma migrate deploy --schema=packages/shared/prisma/schema.prisma && node apps/api/dist/index.js"]
