@@ -137,8 +137,8 @@ export interface BacklogItem {
   customerSegment?: string;
   supportingEvidence?: string;
   revenueOpportunity?: number;
-  complianceRequirement?: boolean;
-  competitiveGap?: boolean;
+  isComplianceReq?: boolean;
+  isCompetitiveGap?: boolean;
   strategicNotes?: string;
   discoveryStatus?: string;
   problemStatement?: string;

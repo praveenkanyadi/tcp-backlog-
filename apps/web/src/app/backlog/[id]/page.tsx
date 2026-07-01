@@ -270,14 +270,14 @@ export default function BacklogItemPage() {
               <div className="flex gap-4">
                 <div>
                   <div className="text-xs text-slate-500">Compliance</div>
-                  <div className={`text-sm font-medium mt-1 ${item.complianceRequirement ? "text-amber-400" : "text-slate-500"}`}>
-                    {item.complianceRequirement ? "Yes" : "No"}
+                  <div className={`text-sm font-medium mt-1 ${item.isComplianceReq ? "text-amber-400" : "text-slate-500"}`}>
+                    {item.isComplianceReq ? "Yes" : "No"}
                   </div>
                 </div>
                 <div>
                   <div className="text-xs text-slate-500">Competitive Gap</div>
-                  <div className={`text-sm font-medium mt-1 ${item.competitiveGap ? "text-orange-400" : "text-slate-500"}`}>
-                    {item.competitiveGap ? "Yes" : "No"}
+                  <div className={`text-sm font-medium mt-1 ${item.isCompetitiveGap ? "text-orange-400" : "text-slate-500"}`}>
+                    {item.isCompetitiveGap ? "Yes" : "No"}
                   </div>
                 </div>
               </div>
