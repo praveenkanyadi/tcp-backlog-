@@ -1,7 +1,7 @@
 FROM node:20-alpine
 WORKDIR /app
 
-COPY package.json package-lock.json tsconfig.json ./
+COPY package.json package-lock.json ./
 COPY packages/shared/package.json ./packages/shared/
 COPY apps/api/package.json ./apps/api/
 
@@ -11,8 +11,8 @@ COPY packages/shared ./packages/shared
 COPY apps/api ./apps/api
 
 RUN npx prisma generate --schema=packages/shared/prisma/schema.prisma
-RUN npm run build -w packages/shared
-RUN npm run build -w apps/api
+RUN cd packages/shared && npx tsc --target ES2022 --module NodeNext --moduleResolution NodeNext --outDir dist --rootDir src --declaration --skipLibCheck --esModuleInterop
+RUN cd apps/api && npx tsc --skipLibCheck
 
 EXPOSE 3001
 ENV NODE_ENV=production
