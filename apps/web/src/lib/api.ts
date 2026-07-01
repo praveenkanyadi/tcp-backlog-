@@ -104,14 +104,11 @@ export interface Comment {
   id: string;
   body: string;
   createdAt: string;
-  author: {
-    id: string;
-    name: string;
-    role: string;
-  };
+  authorId?: string | null;
+  authorName?: string | null;
   parentId?: string | null;
   replies?: Comment[];
-  backlogItemId: string;
+  itemId: string;
 }
 
 export interface BacklogItem {

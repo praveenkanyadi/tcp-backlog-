@@ -65,18 +65,17 @@ function CommentItem({
     <div className="space-y-2">
       <div className="flex items-start gap-3">
         <div className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-xs font-bold text-slate-300 shrink-0">
-          {comment.author.name.charAt(0)}
+          {(comment.authorName ?? "?").charAt(0)}
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-sm font-medium text-slate-200">{comment.author.name}</span>
-            <RoleBadge role={comment.author.role} />
+            <span className="text-sm font-medium text-slate-200">{comment.authorName ?? "Unknown"}</span>
             <span className="text-xs text-slate-500">{timeAgo(comment.createdAt)}</span>
           </div>
           <p className="text-sm text-slate-300 mt-1 whitespace-pre-wrap">{comment.body}</p>
           <div className="flex gap-3 mt-1">
             <button onClick={() => setReplyOpen((v) => !v)} className="text-xs text-slate-500 hover:text-blue-400 transition-colors">Reply</button>
-            {comment.author.id === currentUser.id && (
+            {comment.authorId === currentUser.id && (
               <button onClick={deleteComment} className="text-xs text-slate-500 hover:text-red-400 transition-colors">Delete</button>
             )}
           </div>
