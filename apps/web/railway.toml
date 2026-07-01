@@ -4,6 +4,4 @@ buildCommand = "npm install && npm run build -w packages/shared && npm run build
 
 [deploy]
 startCommand = "npm run start -w apps/web"
-healthcheckPath = "/"
-healthcheckTimeout = 60
 restartPolicyType = "on_failure"
