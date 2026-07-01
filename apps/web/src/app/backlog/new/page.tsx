@@ -80,7 +80,7 @@ export default function NewBacklogPage() {
     if (key === "productId") setForm((f) => ({ ...f, productAreaId: "", [key]: value as string }));
   }
 
-  const filteredAreas = taxonomy?.areas.filter((a) => a.productId === form.productId) ?? [];
+  const filteredAreas = taxonomy?.areas?.filter((a) => a.productId === form.productId) ?? [];
 
   async function handleSubmit() {
     if (!form.title.trim()) { setError("Title is required"); setStep(0); return; }
@@ -170,7 +170,7 @@ export default function NewBacklogPage() {
               <label className={labelCls}>Product <span className="text-red-400">*</span></label>
               <select value={form.productId} onChange={(e) => set("productId", e.target.value)} className={inputCls}>
                 <option value="">Select a product</option>
-                {taxonomy?.products.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
+                {taxonomy?.products?.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
               </select>
             </div>
             <div>
@@ -184,13 +184,13 @@ export default function NewBacklogPage() {
               <label className={labelCls}>Source</label>
               <select value={form.sourceId} onChange={(e) => set("sourceId", e.target.value)} className={inputCls}>
                 <option value="">Select a source</option>
-                {taxonomy?.sources.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
+                {taxonomy?.sources?.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
               </select>
             </div>
             <div>
               <label className={labelCls}>Status</label>
               <select value={form.statusId} onChange={(e) => set("statusId", e.target.value)} className={inputCls}>
-                {taxonomy?.statuses.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
+                {taxonomy?.statuses?.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
               </select>
             </div>
           </>
@@ -253,7 +253,7 @@ export default function NewBacklogPage() {
               <label className={labelCls}>Discovery Status</label>
               <select value={form.discoveryStatus} onChange={(e) => set("discoveryStatus", e.target.value)} className={inputCls}>
                 <option value="">Select a status</option>
-                {taxonomy?.discoveryStatuses.map((d) => <option key={d} value={d}>{d}</option>)}
+                {taxonomy?.discoveryStatuses?.map((d) => <option key={d} value={d}>{d}</option>)}
               </select>
             </div>
             <div>
@@ -268,14 +268,14 @@ export default function NewBacklogPage() {
               <label className={labelCls}>Target Release</label>
               <select value={form.targetReleaseId} onChange={(e) => set("targetReleaseId", e.target.value)} className={inputCls}>
                 <option value="">Select a release</option>
-                {taxonomy?.releases.map((r) => <option key={r.id} value={r.id}>{r.name}</option>)}
+                {taxonomy?.releases?.map((r) => <option key={r.id} value={r.id}>{r.name}</option>)}
               </select>
             </div>
             <div>
               <label className={labelCls}>Roadmap Quarter</label>
               <select value={form.roadmapQuarter} onChange={(e) => set("roadmapQuarter", e.target.value)} className={inputCls}>
                 <option value="">Select a quarter</option>
-                {taxonomy?.roadmapQuarters.map((q) => <option key={q} value={q}>{q}</option>)}
+                {taxonomy?.roadmapQuarters?.map((q) => <option key={q} value={q}>{q}</option>)}
               </select>
             </div>
           </>

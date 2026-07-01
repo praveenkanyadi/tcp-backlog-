@@ -102,7 +102,7 @@ export default function BacklogPage() {
           className="px-3 py-2 bg-slate-900 border border-slate-700 rounded-md text-sm text-slate-200 focus:outline-none focus:border-blue-500"
         >
           <option value="">All Products</option>
-          {taxonomy?.products.map((p) => (
+          {taxonomy?.products?.map((p) => (
             <option key={p.id} value={p.id}>{p.name}</option>
           ))}
         </select>
@@ -112,7 +112,7 @@ export default function BacklogPage() {
           className="px-3 py-2 bg-slate-900 border border-slate-700 rounded-md text-sm text-slate-200 focus:outline-none focus:border-blue-500"
         >
           <option value="">All Statuses</option>
-          {taxonomy?.statuses.map((s) => (
+          {taxonomy?.statuses?.map((s) => (
             <option key={s.id} value={s.id}>{s.name}</option>
           ))}
         </select>

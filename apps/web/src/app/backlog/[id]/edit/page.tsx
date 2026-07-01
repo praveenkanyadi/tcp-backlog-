@@ -96,7 +96,7 @@ export default function EditBacklogPage() {
     }).catch((e) => setError(e instanceof Error ? e.message : "Failed to load")).finally(() => setLoading(false));
   }, [id]);
 
-  const filteredAreas = taxonomy?.areas.filter((a) => a.productId === productId) ?? [];
+  const filteredAreas = taxonomy?.areas?.filter((a) => a.productId === productId) ?? [];
   const canEngineer = ["ENGINEERING", "PM", "ADMIN"].includes(user.role);
   const visibleTabs = canEngineer ? TABS : TABS.slice(0, 4);
 
@@ -215,7 +215,7 @@ export default function EditBacklogPage() {
               <label className={labelCls}>Product</label>
               <select value={productId} onChange={(e) => { setProductId(e.target.value); setProductAreaId(""); }} className={inputCls}>
                 <option value="">Select a product</option>
-                {taxonomy?.products.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
+                {taxonomy?.products?.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
               </select>
             </div>
             <div>
@@ -229,14 +229,14 @@ export default function EditBacklogPage() {
               <label className={labelCls}>Source</label>
               <select value={sourceId} onChange={(e) => setSourceId(e.target.value)} className={inputCls}>
                 <option value="">Select a source</option>
-                {taxonomy?.sources.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
+                {taxonomy?.sources?.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
               </select>
             </div>
             <div>
               <label className={labelCls}>Status</label>
               <select value={statusId} onChange={(e) => setStatusId(e.target.value)} className={inputCls}>
                 <option value="">Select a status</option>
-                {taxonomy?.statuses.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
+                {taxonomy?.statuses?.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
               </select>
             </div>
           </>
@@ -299,7 +299,7 @@ export default function EditBacklogPage() {
               <label className={labelCls}>Discovery Status</label>
               <select value={discoveryStatus} onChange={(e) => setDiscoveryStatus(e.target.value)} className={inputCls}>
                 <option value="">Select a status</option>
-                {taxonomy?.discoveryStatuses.map((d) => <option key={d} value={d}>{d}</option>)}
+                {taxonomy?.discoveryStatuses?.map((d) => <option key={d} value={d}>{d}</option>)}
               </select>
             </div>
             <div>
@@ -314,20 +314,20 @@ export default function EditBacklogPage() {
               <label className={labelCls}>Target Release</label>
               <select value={targetReleaseId} onChange={(e) => setTargetReleaseId(e.target.value)} className={inputCls}>
                 <option value="">Select a release</option>
-                {taxonomy?.releases.map((r) => <option key={r.id} value={r.id}>{r.name}</option>)}
+                {taxonomy?.releases?.map((r) => <option key={r.id} value={r.id}>{r.name}</option>)}
               </select>
             </div>
             <div>
               <label className={labelCls}>Roadmap Quarter</label>
               <select value={roadmapQuarter} onChange={(e) => setRoadmapQuarter(e.target.value)} className={inputCls}>
                 <option value="">Select a quarter</option>
-                {taxonomy?.roadmapQuarters.map((q) => <option key={q} value={q}>{q}</option>)}
+                {taxonomy?.roadmapQuarters?.map((q) => <option key={q} value={q}>{q}</option>)}
               </select>
             </div>
             <div>
               <label className={labelCls}>Initiatives</label>
               <div className="space-y-2 max-h-48 overflow-y-auto">
-                {taxonomy?.initiatives.map((ini) => (
+                {taxonomy?.initiatives?.map((ini) => (
                   <label key={ini.id} className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="checkbox"

@@ -28,7 +28,10 @@ export async function getTaxonomy(req: Request, res: Response) {
     const discoveryStatuses: string[] = dsConfig ? (dsConfig.values as string[]) : [];
     const roadmapQuarters: string[] = rqConfig ? (rqConfig.values as string[]) : [];
 
-    res.json({ portfolios, statuses, sources, releases, initiatives, discoveryStatuses, roadmapQuarters });
+    const products = portfolios.flatMap((p: { products: { areas: unknown[] }[] }) => p.products);
+    const areas = products.flatMap((p: { areas: unknown[] }) => p.areas);
+
+    res.json({ portfolios, products, areas, statuses, sources, releases, initiatives, discoveryStatuses, roadmapQuarters });
   } catch (err) {
     res.status(500).json({ error: String(err) });
   }
