@@ -79,8 +79,8 @@ export default function EditBacklogPage() {
       setCustomerSegment(it.customerSegment ?? "");
       setSupportingEvidence(it.supportingEvidence ?? "");
       setRevenueOpportunity(it.revenueOpportunity?.toString() ?? "");
-      setIsComplianceReq(it.complianceRequirement ?? false);
-      setIsCompetitiveGap(it.competitiveGap ?? false);
+      setIsComplianceReq(it.isComplianceReq ?? false);
+      setIsCompetitiveGap(it.isCompetitiveGap ?? false);
       setStrategicNotes(it.strategicNotes ?? "");
       setDiscoveryStatus(it.discoveryStatus ?? "");
       setProblemStatement(it.problemStatement ?? "");
@@ -116,8 +116,8 @@ export default function EditBacklogPage() {
         customerSegment: customerSegment || undefined,
         supportingEvidence: supportingEvidence || undefined,
         revenueOpportunity: revenueOpportunity ? Number(revenueOpportunity) : undefined,
-        complianceRequirement: isComplianceReq,
-        competitiveGap: isCompetitiveGap,
+        isComplianceReq: isComplianceReq,
+        isCompetitiveGap: isCompetitiveGap,
         strategicNotes: strategicNotes || undefined,
         discoveryStatus: discoveryStatus || undefined,
         problemStatement: problemStatement || undefined,
