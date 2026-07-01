@@ -1,0 +1,20 @@
+import { Router } from "express";
+import * as c from "../controllers/backlog.js";
+
+const router = Router();
+router.get("/portfolio", c.getPortfolio);
+router.get("/taxonomy", c.getTaxonomy);
+router.get("/activity", c.getActivity);
+router.post("/rank", c.publishRanking);
+router.get("/", c.listItems);
+router.post("/", c.createItem);
+router.get("/:id", c.getItem);
+router.put("/:id", c.updateItem);
+router.delete("/:id", c.deleteItem);
+router.post("/:id/publish", c.publishItem);
+router.post("/:id/eng-review", c.engReview);
+router.post("/:id/upvote", c.toggleUpvote);
+router.post("/:id/comments", c.addComment);
+router.delete("/:id/comments/:commentId", c.deleteComment);
+router.post("/:id/jira", c.linkJira);
+export default router;

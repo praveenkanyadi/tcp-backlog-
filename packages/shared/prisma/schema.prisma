@@ -1,0 +1,220 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  role      UserRole @default(STAKEHOLDER)
+  createdAt DateTime @default(now())
+
+  items         BacklogItem[]   @relation("ItemOwner")
+  createdItems  BacklogItem[]   @relation("ItemCreator")
+  engReviewedItems BacklogItem[] @relation("EngReviewer")
+  comments      Comment[]
+  upvotes       Upvote[]
+  activities    BacklogActivity[]
+}
+
+enum UserRole {
+  ADMIN
+  PM
+  ENGINEERING
+  CS
+  SALES
+  IMPLEMENTATION
+  STAKEHOLDER
+}
+
+model Portfolio {
+  id       String    @id @default(cuid())
+  name     String
+  products Product[]
+}
+
+model Product {
+  id          String        @id @default(cuid())
+  name        String
+  portfolioId String
+  sortOrder   Int           @default(0)
+  portfolio   Portfolio     @relation(fields: [portfolioId], references: [id])
+  areas       ProductArea[]
+  items       BacklogItem[]
+}
+
+model ProductArea {
+  id        String        @id @default(cuid())
+  name      String
+  productId String
+  sortOrder Int           @default(0)
+  product   Product       @relation(fields: [productId], references: [id])
+  items     BacklogItem[]
+}
+
+model BacklogStatus {
+  id        String        @id @default(cuid())
+  name      String
+  color     String?
+  isDefault Boolean       @default(false)
+  sortOrder Int           @default(0)
+  items     BacklogItem[]
+}
+
+model BacklogSource {
+  id        String        @id @default(cuid())
+  name      String
+  sortOrder Int           @default(0)
+  items     BacklogItem[]
+}
+
+model StrategicInitiative {
+  id        String                  @id @default(cuid())
+  name      String
+  color     String?
+  sortOrder Int                     @default(0)
+  items     BacklogItemInitiative[]
+}
+
+model TargetRelease {
+  id        String        @id @default(cuid())
+  name      String
+  sortOrder Int           @default(0)
+  items     BacklogItem[]
+}
+
+model BacklogItem {
+  id            String   @id @default(cuid())
+  title         String
+  description   String?
+  productId     String
+  productAreaId String?
+  statusId      String
+  sourceId      String?
+  ownerId       String?
+  createdById   String?
+
+  publishedToStakeholders Boolean @default(false)
+
+  customersImpacted      Int?
+  arrRepresented         Decimal? @db.Decimal(15, 2)
+  opportunitiesBlocked   Int?
+  churnRisk              String?
+  customerSegment        String?
+  vertical               String?
+  customerQuotes         Json?
+  supportingEvidence     String?
+
+  revenueOpportunity   Decimal? @db.Decimal(15, 2)
+  isComplianceReq      Boolean  @default(false)
+  isCompetitiveGap     Boolean  @default(false)
+  strategicNotes       String?
+
+  problemStatement     String?
+  discoveryStatus      String?
+  successMetrics       String?
+  productNotes         String?
+
+  estimatedEffort      String?
+  complexity           String?
+  technicalDeps        String?
+  risks                String?
+  confidenceLevel      String?
+  engReviewedAt        DateTime?
+  engReviewedById      String?
+
+  priorityScore        Int?
+  businessPriority     Int?
+  targetReleaseId      String?
+  roadmapQuarter       String?
+  rankPublishedAt      DateTime?
+
+  jiraIssueKey         String?
+  jiraUrl              String?
+
+  importSource         String?
+  importId             String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  product       Product              @relation(fields: [productId], references: [id])
+  productArea   ProductArea?         @relation(fields: [productAreaId], references: [id])
+  status        BacklogStatus        @relation(fields: [statusId], references: [id])
+  source        BacklogSource?       @relation(fields: [sourceId], references: [id])
+  targetRelease TargetRelease?       @relation(fields: [targetReleaseId], references: [id])
+  owner         User?                @relation("ItemOwner", fields: [ownerId], references: [id])
+  createdBy     User?                @relation("ItemCreator", fields: [createdById], references: [id])
+  engReviewedBy User?                @relation("EngReviewer", fields: [engReviewedById], references: [id])
+  initiatives   BacklogItemInitiative[]
+  activities    BacklogActivity[]
+  comments      Comment[]
+  upvotes       Upvote[]
+
+  @@index([productId])
+  @@index([statusId])
+  @@index([roadmapQuarter])
+  @@index([publishedToStakeholders])
+}
+
+model BacklogItemInitiative {
+  itemId       String
+  initiativeId String
+  item         BacklogItem         @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  initiative   StrategicInitiative @relation(fields: [initiativeId], references: [id])
+  @@id([itemId, initiativeId])
+}
+
+model Comment {
+  id         String   @id @default(cuid())
+  itemId     String
+  authorId   String?
+  authorName String?
+  parentId   String?
+  body       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  item    BacklogItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  author  User?       @relation(fields: [authorId], references: [id])
+  parent  Comment?    @relation("Replies", fields: [parentId], references: [id])
+  replies Comment[]   @relation("Replies")
+}
+
+model Upvote {
+  itemId    String
+  userId    String
+  createdAt DateTime @default(now())
+
+  item BacklogItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  user User        @relation(fields: [userId], references: [id])
+
+  @@id([itemId, userId])
+}
+
+model BacklogActivity {
+  id         String   @id @default(cuid())
+  itemId     String
+  actorId    String?
+  actorName  String?
+  actorRole  String?
+  changeType String
+  summary    String
+  changes    Json?
+  comment    String?
+  createdAt  DateTime @default(now())
+
+  item  BacklogItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  actor User?       @relation(fields: [actorId], references: [id])
+}
+
+model BacklogConfig {
+  key       String   @id
+  values    Json
+  updatedAt DateTime @updatedAt
+}
