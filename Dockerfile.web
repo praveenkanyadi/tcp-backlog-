@@ -11,6 +11,9 @@ COPY packages/shared ./packages/shared
 COPY apps/web ./apps/web
 
 RUN npm run build -w packages/shared
+
+ARG NEXT_PUBLIC_API_URL
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 RUN npm run build -w apps/web
 
 EXPOSE 3000
